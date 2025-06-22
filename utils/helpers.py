@@ -34,6 +34,6 @@ def generate_graph(region):
     return graph
 
 __all__ = [
-    "generate_graph",
-    "fill_holes_and_dissolve",   # ← add this
+    "fill_holes_and_dissolve", 
+    "generate_graph",   # ← add this
 ]
