@@ -9,6 +9,5 @@ def generate_graph(region):
         cleaned = Polygon(geom.exterior)
     elif geom.geom_type == "MultiPolygon":
         cleaned = MultiPolygon([Polygon(p.exterior) for p in geom.geoms])
-    else:          
-        return geom
-    return cleaned.buffer(0) 
+    graph = ox.graph_from_polygon(cleaned.buffer(0), network_type='drive_service')
+    return graph
