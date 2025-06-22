@@ -32,3 +32,8 @@ def generate_graph(region):
     geom = ox.geocode_to_gdf(region)
     graph = geom['geometry'].apply(fill_holes_and_dissolve)
     return graph
+
+__all__ = [
+    "generate_graph",
+    "fill_holes_and_dissolve",   # ← add this
+]
