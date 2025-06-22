@@ -30,7 +30,7 @@ def generate_graph(region):
             Graph from the region's outermost polygon
     """
     geom = ox.geocode_to_gdf(region)
-    graph = geom['geometry'].apply(fill_holes_and_dissolve)
+    graph = ox.graph_from_polygon(geom['geometry'].apply(fill_holes_and_dissolve), network_type='drive_service')
     return graph
 
 __all__ = [
