@@ -30,5 +30,5 @@ def generate_graph(region):
             Graph from the region's outermost polygon
     """
     geom = ox.geocode_to_gdf(region)
-    graph = geom.apply(fill_holes_and_dissolve)
+    graph = geom['geometry'].apply(fill_holes_and_dissolve)
     return graph
