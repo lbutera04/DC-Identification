@@ -10,7 +10,7 @@ def fill_holes_and_dissolve(geom):
         geom (shapely.Polygon, shapely.MultiPolygon): The polygon to be filled in
     Returns:
         cleaned.buffer[0] (shapely.Polygon, shapely.MultiPolygon): The cleaned polygon
-    """
+    """   
     if geom.geom_type == "Polygon":
         cleaned = Polygon(geom.exterior)
     elif geom.geom_type == "MultiPolygon":
@@ -29,9 +29,11 @@ def generate_graph(region):
         graph : nx.MultiDiGraph
             Graph from the region's outermost polygon
     """
-    geom = ox.geocode_to_gdf(region)
-    graph = ox.graph_from_polygon(geom['geometry'].apply(fill_holes_and_dissolve), network_type='drive_service')
-    return graph
+    gdf        = ox.geocode_to_gdf(region)
+    cleaned    = gdf.geometry.apply(fill_holes_and_dissolve)   # GeoSeries
+    boundary   = cleaned.unary_union      # merges them into one MultiPolygon
+    G          = ox.graph_from_polygon(boundary, network_type="drive_service")
+    return G
 
 __all__ = [
     "fill_holes_and_dissolve", 
